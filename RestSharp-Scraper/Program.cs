@@ -12,7 +12,6 @@ namespace RestSharp_Scraper
         {
 
             Console.WriteLine("hello");
-
         }
     }
 }
