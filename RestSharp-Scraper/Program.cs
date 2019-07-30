@@ -10,6 +10,9 @@ namespace RestSharp_Scraper
     {
         static void Main(string[] args)
         {
+
+            Console.WriteLine("hello");
+
         }
     }
 }
