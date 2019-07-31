@@ -24,8 +24,13 @@ namespace RestSharp_Scraper
             IRestResponse response = Client.Execute(request);
             var content = response.Content;
 
-            Console.WriteLine(content);
+            // parse data as a JsonObject and make it more formated
+            object dataAsJsonObject = JsonConvert.DeserializeObject(content);
+
+            Console.WriteLine(dataAsJsonObject);
             Console.ReadKey();
         }
+
+        public
     }
 }

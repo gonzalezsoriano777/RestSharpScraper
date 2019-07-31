@@ -17,6 +17,8 @@ namespace RestSharp_Scraper
             apiScraper apiScrape = new apiScraper();
             apiScrape.ScrapeFromContent();
 
+
+
         }
     }
 }
