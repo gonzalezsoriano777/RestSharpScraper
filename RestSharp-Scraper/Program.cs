@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RestSharp;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 
 namespace RestSharp_Scraper
 {
@@ -10,7 +14,9 @@ namespace RestSharp_Scraper
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("hello");
+            apiScraper apiScrape = new apiScraper();
+            apiScrape.ScrapeFromContent();
+
         }
     }
 }
