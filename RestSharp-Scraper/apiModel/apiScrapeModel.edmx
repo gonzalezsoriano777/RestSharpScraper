@@ -11,13 +11,10 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StockRecord" Type="datetime" />
+          <Property Name="ExchangeTimezoneName" Type="text" />
+          <Property Name="fullExchangeName" Type="text" />
           <Property Name="Symbol" Type="nchar" MaxLength="10" />
-          <Property Name="Company Name" Type="text" />
-          <Property Name="LastPrice" Type="text" />
-          <Property Name="Change" Type="text" />
-          <Property Name="Percent_Change" Type="nvarchar" MaxLength="50" />
-          <Property Name="MarketTime" Type="text" />
-          <Property Name="VolumeAvg" Type="text" />
+          <Property Name="MarketChange" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="apiDatabaseModelStoreContainer">
           <EntitySet Name="apiScrapeTable" EntityType="Self.apiScrapeTable" Schema="dbo" store:Type="Tables" />
@@ -33,15 +30,12 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StockRecord" Type="DateTime" Precision="3" />
+          <Property Name="ExchangeTimezoneName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fullExchangeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Symbol" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Company_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LastPrice" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Change" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Percent_Change" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MarketTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="VolumeAvg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MarketChange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="apiDatabaseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="apiDatabaseConn" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="apiScrapeTables" EntityType="Self.apiScrapeTable" />
         </EntityContainer>
       </Schema>
@@ -49,19 +43,16 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="apiDatabaseModelStoreContainer" CdmEntityContainer="apiDatabaseEntities">
+        <EntityContainerMapping StorageEntityContainer="apiDatabaseModelStoreContainer" CdmEntityContainer="apiDatabaseConn">
           <EntitySetMapping Name="apiScrapeTables">
             <EntityTypeMapping TypeName="apiDatabaseModel.apiScrapeTable">
               <MappingFragment StoreEntitySet="apiScrapeTable">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="StockRecord" ColumnName="StockRecord" />
+                <ScalarProperty Name="ExchangeTimezoneName" ColumnName="ExchangeTimezoneName" />
+                <ScalarProperty Name="fullExchangeName" ColumnName="fullExchangeName" />
                 <ScalarProperty Name="Symbol" ColumnName="Symbol" />
-                <ScalarProperty Name="Company_Name" ColumnName="Company Name" />
-                <ScalarProperty Name="LastPrice" ColumnName="LastPrice" />
-                <ScalarProperty Name="Change" ColumnName="Change" />
-                <ScalarProperty Name="Percent_Change" ColumnName="Percent_Change" />
-                <ScalarProperty Name="MarketTime" ColumnName="MarketTime" />
-                <ScalarProperty Name="VolumeAvg" ColumnName="VolumeAvg" />
+                <ScalarProperty Name="MarketChange" ColumnName="MarketChange" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

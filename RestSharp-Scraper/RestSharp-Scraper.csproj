@@ -85,56 +85,56 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIScrape\API-Database.Context.cs">
+    <Compile Include="apiModel\apiScrapeModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>API-Database.Context.tt</DependentUpon>
+      <DependentUpon>apiScrapeModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="APIScrape\API-Database.cs">
+    <Compile Include="apiModel\apiScrapeModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>API-Database.tt</DependentUpon>
+      <DependentUpon>apiScrapeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="APIScrape\API-Database.Designer.cs">
+    <Compile Include="apiModel\apiScrapeModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>API-Database.edmx</DependentUpon>
+      <DependentUpon>apiScrapeModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="apiScraper.cs" />
-    <Compile Include="APIScrape\apiScrapeTable.cs">
-      <DependentUpon>API-Database.tt</DependentUpon>
+    <Compile Include="apiModel\apiScrapeTable.cs">
+      <DependentUpon>apiScrapeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="APIScrape\API-Database.edmx">
+    <EntityDeploy Include="apiModel\apiScrapeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>API-Database.Designer.cs</LastGenOutput>
+      <LastGenOutput>apiScrapeModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="APIScrape\API-Database.edmx.diagram">
-      <DependentUpon>API-Database.edmx</DependentUpon>
+    <None Include="apiModel\apiScrapeModel.edmx.diagram">
+      <DependentUpon>apiScrapeModel.edmx</DependentUpon>
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="apiModel\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="APIScrape\API-Database.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>API-Database.Context.cs</LastGenOutput>
-      <DependentUpon>API-Database.edmx</DependentUpon>
-    </Content>
-    <Content Include="APIScrape\API-Database.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>API-Database.edmx</DependentUpon>
-      <LastGenOutput>API-Database.cs</LastGenOutput>
-    </Content>
+    <Folder Include="APIScrape\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="apiModel\apiScrapeModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>apiScrapeModel.edmx</DependentUpon>
+      <LastGenOutput>apiScrapeModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="apiModel\apiScrapeModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>apiScrapeModel.edmx</DependentUpon>
+      <LastGenOutput>apiScrapeModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

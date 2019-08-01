@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using RestSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Data.SqlClient;
+using RestSharp_Scraper.apiModel;
 
 namespace RestSharp_Scraper
 {
-    public class apiScraper
+    public class ApiScraper
     {
         public void ScrapeFromContent()
         {
@@ -25,12 +27,45 @@ namespace RestSharp_Scraper
             var content = response.Content;
 
             // parse data as a JsonObject and make it more formated
-            object dataAsJsonObject = JsonConvert.DeserializeObject(content);
+            object dataAsJsonObject = JsonConvert.DeserializeObject<apiScrapeTable>(content.ToString());
 
-            Console.WriteLine(dataAsJsonObject);
-            Console.ReadKey();
+            var stockDataJsonArray = JArray.Parse(content);
+
+            
+
+            //Console.WriteLine(dataAsJsonObject);
+
+            string connectionString = @"Data Source=(localdb)\ProjectsV13;Initial Catalog=apiDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
+            using (SqlConnection db = new SqlConnection(connectionString))
+            {
+
+
+
+                db.Open();
+                Console.WriteLine("Database has been opened");
+                Console.WriteLine();
+
+                foreach (JToken stock in stockDataJsonArray)
+                {
+
+                    SqlCommand apiTable = new SqlCommand(" INSERT INTO dbo.[apiScrapeTable] ( StockRecord, ExchangeTimezoneName, FullExchangeName, Symbol, MarketChange) VALUES ( @stockRecord, @exchangeTimezoneName, @fullExchangeName, @symbol, @regularMarketChange )", db);
+
+                    apiTable.Parameters.AddWithValue("@stockRecord", DateTime.Now);
+                    apiTable.Parameters.AddWithValue("@exchangeTimezoneName", stock["exchangeTimezoneName"]);
+                    apiTable.Parameters.AddWithValue("@fullExchangeName", stock["marketSummaryResponse.result.fullExchangeName"]);
+                    apiTable.Parameters.AddWithValue("@symbol", stock["symbol"]);
+                    apiTable.Parameters.AddWithValue("@regularMarketChange", stock["regularMarketChange.fmt"]);
+
+                    apiTable.ExecuteNonQuery();
+                }
+
+                db.Close();
+                Console.WriteLine("Database has been inserted with API Data!");
+                Console.WriteLine();
+
+            }
+
         }
-
-        public
     }
 }

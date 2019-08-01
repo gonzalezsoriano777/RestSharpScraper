@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RestSharp_Scraper.APIScrape
+namespace RestSharp_Scraper.apiModel
 {
     using System;
     using System.Collections.Generic;
@@ -16,12 +16,9 @@ namespace RestSharp_Scraper.APIScrape
     {
         public int Id { get; set; }
         public Nullable<System.DateTime> StockRecord { get; set; }
+        public string ExchangeTimezoneName { get; set; }
+        public string fullExchangeName { get; set; }
         public string Symbol { get; set; }
-        public string Company_Name { get; set; }
-        public string LastPrice { get; set; }
-        public string Change { get; set; }
-        public string Percent_Change { get; set; }
-        public string MarketTime { get; set; }
-        public string VolumeAvg { get; set; }
+        public string MarketChange { get; set; }
     }
 }

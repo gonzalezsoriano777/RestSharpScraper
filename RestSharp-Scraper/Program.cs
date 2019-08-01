@@ -14,10 +14,8 @@ namespace RestSharp_Scraper
     {
         static void Main(string[] args)
         {
-            apiScraper apiScrape = new apiScraper();
+            ApiScraper apiScrape = new ApiScraper();
             apiScrape.ScrapeFromContent();
-
-
 
         }
     }
