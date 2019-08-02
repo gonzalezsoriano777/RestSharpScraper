@@ -16,9 +16,9 @@ namespace RestSharp_Scraper.apiModel
     {
         public int Id { get; set; }
         public Nullable<System.DateTime> StockRecord { get; set; }
-        public string ExchangeTimezoneName { get; set; }
-        public string fullExchangeName { get; set; }
         public string Symbol { get; set; }
+        public string LastPrice { get; set; }
+        public string PercentChange{ get; set; }
         public string MarketChange { get; set; }
     }
 }

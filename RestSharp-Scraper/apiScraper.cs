@@ -16,53 +16,46 @@ namespace RestSharp_Scraper
         public void ScrapeFromContent()
         {
             // Initialized restSharper to grab the api url
-            RestClient Client = new RestClient("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-summary");
+            RestClient client = new RestClient("https://morning-star.p.rapidapi.com/market/get-summary");
             var request = new RestRequest(Method.GET);
 
-            // Added the Host and Key, to grab the content of the api stocks
-            request.AddHeader("X-RapidAPI-Host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
-            request.AddHeader("X-RapidAPI-Key", "bfab8a0181mshf12c4afb207144ap126f55jsnecf3c75cf681");
+            request.AddHeader("x-rapidapi-host", "morning-star.p.rapidapi.com");
+            request.AddHeader("x-rapidapi-key", "bfab8a0181mshf12c4afb207144ap126f55jsnecf3c75cf681");
 
-            IRestResponse response = Client.Execute(request);
+            IRestResponse response = client.Execute(request);
             var content = response.Content;
 
-            // parse data as a JsonObject and make it more formated
-            object dataAsJsonObject = JsonConvert.DeserializeObject<apiScrapeTable>(content.ToString());
+            // Console.WriteLine(content);
 
-            var stockDataJsonArray = JArray.Parse(content);
-
-            
-
-            //Console.WriteLine(dataAsJsonObject);
+            var stockDataAsJObject = JObject.Parse(content);
+            Console.WriteLine(stockDataAsJObject);
 
             string connectionString = @"Data Source=(localdb)\ProjectsV13;Initial Catalog=apiDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
             using (SqlConnection db = new SqlConnection(connectionString))
             {
-
-
-
                 db.Open();
-                Console.WriteLine("Database has been opened");
+                Console.WriteLine("Database has been opened!");
                 Console.WriteLine();
 
-                foreach (JToken stock in stockDataJsonArray)
+                foreach(var stock in stockDataAsJObject)
                 {
+                    SqlCommand insertion = new SqlCommand("INSERT INTO dbo.apiScrapeTable (StockRecord, Symbol, LastPrice, PercentChange, MarketChange) VALUES(@stockRecord, @symbol, @lastPrice, @percent_change, @marketChange ) ", db);
 
-                    SqlCommand apiTable = new SqlCommand(" INSERT INTO dbo.[apiScrapeTable] ( StockRecord, ExchangeTimezoneName, FullExchangeName, Symbol, MarketChange) VALUES ( @stockRecord, @exchangeTimezoneName, @fullExchangeName, @symbol, @regularMarketChange )", db);
+                    insertion.Parameters.AddWithValue("@stockRecord", DateTime.Now);
+                    insertion.Parameters.AddWithValue("@symbol", );
+                    insertion.Parameters.AddWithValue("@lastPrice", );
+                    insertion.Parameters.AddWithValue("@percent_change", );
+                    insertion.Parameters.AddWithValue("@marketChange", );
 
-                    apiTable.Parameters.AddWithValue("@stockRecord", DateTime.Now);
-                    apiTable.Parameters.AddWithValue("@exchangeTimezoneName", stock["exchangeTimezoneName"]);
-                    apiTable.Parameters.AddWithValue("@fullExchangeName", stock["marketSummaryResponse.result.fullExchangeName"]);
-                    apiTable.Parameters.AddWithValue("@symbol", stock["symbol"]);
-                    apiTable.Parameters.AddWithValue("@regularMarketChange", stock["regularMarketChange.fmt"]);
+                    insertion.ExecuteNonQuery();
 
-                    apiTable.ExecuteNonQuery();
                 }
 
                 db.Close();
-                Console.WriteLine("Database has been inserted with API Data!");
+                Console.WriteLine("Database has been updated with data!");
                 Console.WriteLine();
+
 
             }
 
