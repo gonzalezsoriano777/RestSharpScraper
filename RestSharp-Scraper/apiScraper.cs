@@ -17,7 +17,7 @@ namespace RestSharp_Scraper
         {
             // Initialized restSharper to grab the api url
             RestClient client = new RestClient("https://morning-star.p.rapidapi.com/market/get-summary");
-            var request = new RestRequest(Method.GET);
+            RestRequest request = new RestRequest(Method.GET);
 
             request.AddHeader("x-rapidapi-host", "morning-star.p.rapidapi.com");
             request.AddHeader("x-rapidapi-key", "bfab8a0181mshf12c4afb207144ap126f55jsnecf3c75cf681");
@@ -27,37 +27,12 @@ namespace RestSharp_Scraper
 
             // Console.WriteLine(content);
 
-            var stockDataAsJObject = JObject.Parse(content);
-            Console.WriteLine(stockDataAsJObject);
+            dynamic stockDataAsJObject = JsonConvert.DeserializeObject(content);
 
-            string connectionString = @"Data Source=(localdb)\ProjectsV13;Initial Catalog=apiDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+             Console.WriteLine(stockDataAsJObject["MarketRegions"]["USA"][0]["Exchange"]);
 
-            using (SqlConnection db = new SqlConnection(connectionString))
-            {
-                db.Open();
-                Console.WriteLine("Database has been opened!");
-                Console.WriteLine();
+            //Console.WriteLine(stockDataAsJObject["MarketRegions"]);
 
-                foreach(var stock in stockDataAsJObject)
-                {
-                    SqlCommand insertion = new SqlCommand("INSERT INTO dbo.apiScrapeTable (StockRecord, Symbol, LastPrice, PercentChange, MarketChange) VALUES(@stockRecord, @symbol, @lastPrice, @percent_change, @marketChange ) ", db);
-
-                    insertion.Parameters.AddWithValue("@stockRecord", DateTime.Now);
-                    insertion.Parameters.AddWithValue("@symbol", );
-                    insertion.Parameters.AddWithValue("@lastPrice", );
-                    insertion.Parameters.AddWithValue("@percent_change", );
-                    insertion.Parameters.AddWithValue("@marketChange", );
-
-                    insertion.ExecuteNonQuery();
-
-                }
-
-                db.Close();
-                Console.WriteLine("Database has been updated with data!");
-                Console.WriteLine();
-
-
-            }
 
         }
     }
